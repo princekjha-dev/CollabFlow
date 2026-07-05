@@ -1,117 +1,142 @@
 # CollabFlow
 
-CollabFlow is a real-time task management backend built with Node.js, Express, TypeScript, Prisma, PostgreSQL, JWT authentication, and Socket.IO.
+CollabFlow is a polished collaboration backend with real-time task management, secure user flows, and clean API design. It is built using TypeScript, Express, Prisma, PostgreSQL, JWT authentication, and Socket.IO.
 
-## Features
+## What it includes
 
-- User authentication with register, login, logout, and refresh tokens
-- User profile management
-- Project and team membership management
-- Task CRUD with status, priority, due dates, and assignees
-- Task comments
-- Real-time updates for task and project events through Socket.IO
+- Secure authentication flows with JWT access and refresh tokens
+- Project management with ownership, membership, and invitation flows
+- Task CRUD for tracking status, priority, due dates, and assignees
+- Task comments and team-level collaboration support
+- Real-time project updates via Socket.IO
+- Production-ready server setup with Vercel-compatible export support
+- Static landing page in `public/` for a premium blue-black product presence
 
-## Tech Stack
+## Key Features
 
-- Backend: Node.js, Express, TypeScript
-- Database: PostgreSQL with Prisma ORM
-- Authentication: JWT with refresh tokens
-- Validation: Zod
-- Real-time: Socket.IO
-- Environment handling: dotenv
-- Password hashing: bcryptjs
+- Authentication: register, login, logout, refresh token, current user
+- Project APIs: list, create, update, delete, invite members
+- Task APIs: list, create, read, update, delete, comment
+- Realtime notifications: Socket.IO room joins and project updates
+- Validation and error handling with Zod and centralized middleware
+- API-first approach with clean route structure under `/api`
 
-## Project Structure
+## Tech stack
 
-- src/controllers: Request handlers
-- src/services: Business logic
-- src/routes: API routes
-- src/middleware: Authentication, validation, and error handling
-- src/utils: JWT helpers and Socket utilities
-- prisma: Prisma schema and migrations
+- Node.js + Express
+- TypeScript
+- PostgreSQL + Prisma ORM
+- JWT authentication
+- Socket.IO real-time messaging
+- Zod validation
+- Helmet and CORS for production-ready HTTP security
+- Vercel Node serverless-friendly deployment
 
-## Installation
+## Repository structure
 
-1. Clone the repository
-2. Install dependencies
+- `src/app.ts` — application factory and middleware setup
+- `src/server.ts` — local development entrypoint
+- `src/routes/` — Express route definitions
+- `src/controllers/` — request handling logic
+- `src/services/` — business rules and database operations
+- `src/middleware/` — auth, validation, and error handling
+- `src/utils/` — JWT helpers and Socket utilities
+- `prisma/` — data model and migrations
+- `api/` — Vercel serverless entrypoint
+- `public/` — static landing page and styles
+
+## Getting started
+
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-3. Create a PostgreSQL database and update the environment variables in the .env file
-
-4. Generate the Prisma client and run migrations
-
-```bash
-npx prisma generate
-npx prisma migrate dev --name init
-```
-
-5. Start the development server
-
-```bash
-npm run dev
-```
-
-## Environment Variables
-
-Create a .env file using the example file as a reference:
+### 2. Create environment file
 
 ```bash
 cp .env.example .env
 ```
 
-Required variables include:
+Update `.env` with your database connection and JWT secrets.
 
-- DATABASE_URL
-- JWT_ACCESS_SECRET
-- JWT_REFRESH_SECRET
-- PORT
+### 3. Generate Prisma client
 
-## API Overview
+```bash
+npx prisma generate
+```
+
+### 4. Run migrations
+
+```bash
+npx prisma migrate dev --name init
+```
+
+### 5. Start development server
+
+```bash
+npm run dev
+```
+
+The backend will start on the port defined in `.env`.
+
+## Build for production
+
+```bash
+npm run build
+```
+
+## API endpoints
 
 ### Authentication
 
-- POST /api/auth/register
-- POST /api/auth/login
-- POST /api/auth/logout
-- POST /api/auth/refresh
-- GET /api/auth/me
-- PATCH /api/auth/me
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `POST /api/auth/refresh`
+- `GET /api/auth/me`
+- `PATCH /api/auth/me`
 
 ### Projects
 
-- GET /api/projects
-- POST /api/projects
-- GET /api/projects/:projectId
-- PATCH /api/projects/:projectId
-- DELETE /api/projects/:projectId
-- POST /api/projects/:projectId/invite
+- `GET /api/projects`
+- `POST /api/projects`
+- `GET /api/projects/:projectId`
+- `PATCH /api/projects/:projectId`
+- `DELETE /api/projects/:projectId`
+- `POST /api/projects/:projectId/invite`
 
 ### Tasks
 
-- GET /api/tasks
-- POST /api/tasks
-- GET /api/tasks/:taskId
-- PATCH /api/tasks/:taskId
-- DELETE /api/tasks/:taskId
-- POST /api/tasks/:taskId/comments
+- `GET /api/tasks`
+- `POST /api/tasks`
+- `GET /api/tasks/:taskId`
+- `PATCH /api/tasks/:taskId`
+- `DELETE /api/tasks/:taskId`
+- `POST /api/tasks/:taskId/comments`
 
-## Flowchart
+## Local development notes
 
-```mermaid
-flowchart TD
-    A[User] --> B[Register or Login]
-    B --> C[JWT Access + Refresh Tokens]
-    C --> D[Create or Join Project]
-    D --> E[Create or Update Task]
-    E --> F[Comment on Task]
-    E --> G[Socket.IO Real-time Event]
-    G --> H[Notify Project Members]
-    H --> I[Task and Project Data Updated]
-```
+- The app uses `src/server.ts` for local development and `api/index.ts` for Vercel deployment.
+- `src/app.ts` exports the Express app as the default export for compatibility with serverless platforms.
+- Use `POST /api/auth/login` to obtain tokens and `GET /api/auth/me` to verify authentication.
+
+## Deployment
+
+This project includes a `vercel.json` file and `api/index.ts` entrypoint for Vercel deployment.
+
+### Recommended deployment steps
+
+1. Push the branch to GitHub
+2. Add the project to Vercel
+3. Set environment variables in Vercel
+4. Deploy
+
+## Design and product presentation
+
+A modern static landing page is provided in the `public/` folder with a refined blue/black palette, premium spacing, and a business-focused layout.
 
 ## Notes
 
-The current implementation provides the backend foundation for a production-ready collaboration workflow. It is structured to support future expansion such as role-based permissions, notifications, file attachments, and a frontend client.
+This repository is optimized as a backend foundation for a collaboration product. It can be extended with a frontend client, role-based permissions, notifications, file attachments, and dashboards.

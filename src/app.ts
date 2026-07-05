@@ -46,3 +46,6 @@ export function createApp() {
 
   return { app, httpServer };
 }
+
+const { app } = createApp();
+export default app;

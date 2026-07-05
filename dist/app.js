@@ -44,3 +44,5 @@ function createApp() {
     app.use(errorHandler_1.errorHandler);
     return { app, httpServer };
 }
+const { app } = createApp();
+exports.default = app;
